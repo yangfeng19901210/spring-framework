@@ -36,3 +36,36 @@ Follow [@SpringCentral](https://twitter.com/springcentral), [@SpringFramework](h
 ## License
 
 The Spring Framework is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
+
+##spring5.3.x源码编译步骤
+1.登录spring官网https://spring.io，projects->Spring Framework点击右侧的github图标
+2.将spring源码点击fork复制到自己的远程仓库中，方便对代码进行改造后的提交
+3.fok完成后，在本地远程代码存放的目录（例如：D:\springSourseCode5.3），在改目录下点击Git Bash Here
+4.克隆代码带本地 git clone 自己远程仓库的地址
+5.代码克隆完成后配置gradle本地路径：gradle->wrapper下的gradle-wrapper.properties文件，
+将distributionUrl=file:///e:/dev_env/gradle-6.5.1-all.zip(这里选择gradle的压缩包的全路径地址)，file后面为本地gradle路径
+6.打开build.gradle，在头部添加，想党羽maven中的pom文件
+buildscript {
+	repositories {
+		maven { url "https://repo.spring.io/plugins-release" }
+	}
+}
+7.添加阿里镜像以及spring插件库
+repositories {
+			//新增以下2个阿里云镜像
+			maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+			maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+			mavenCentral()
+			maven { url "https://repo.spring.io/libs-spring-framework-build" }
+			maven { url "https://repo.spring.io/milestone" } // Reactor
+			//新增spring插件库
+			maven { url "https://repo.spring.io/plugins-release" }
+}
+8.idea打开项目，file->open选择spring源码的根目录，打开后插件会自动帮助我们下载所需的jar ，这个过程比较漫长，建议耐心等待
+9.编译测试必须的模块spring-oxm，spring-core，spring-context在右侧的目录中依次执行模块->tasks->other->compileTestJava
+10.编译整个项目spring->Tasks->build->build,等待构建成功之后创建测试模块进行测试
+11.创建好新模块，在引入包依赖时不能使用compile 因为5.3之后已经废除了该标签，需要使用implementation或者api
+implementation(project(":spring-context"))
+api(project(":spring-beans"))
+
+
