@@ -82,8 +82,11 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * from the given component classes and automatically refreshing the context.
 	 * @param componentClasses one or more component classes &mdash; for example,
 	 * {@link Configuration @Configuration} classes
+	 * spring 容器启动类
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... componentClasses) {
+		//this() 调用当前对象的无参构造，因为当前对象存在继承关系，所以先调用的是父类的无参构造方法
+		//父类的无参狗仔方法中初始化了bean工厂
 		this();
 		register(componentClasses);
 		refresh();
